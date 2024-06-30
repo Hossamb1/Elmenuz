@@ -15,14 +15,14 @@ Rename the .envexample to .env and add your [MongoDB](https://www.mongodb.com/) 
 ### Install backend dependencies
 
 ```bash
-cd server
+cd backend
 npm install
 ```
 
 ### Install client dependencies
 
 ```bash
-cd client
+cd frontend
 npm install
 ```
 
