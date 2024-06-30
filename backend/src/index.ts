@@ -16,6 +16,9 @@ app.use(express.json());
 // allowing all cors
 app.use(cors());
 
+app.get("/", async (req: Request, res: Response) => {
+  res.json({ message: "Hello!" });
+});
 app.get("/health", async (req: Request, res: Response) => {
   res.json({ message: "Health OK!" });
 });
