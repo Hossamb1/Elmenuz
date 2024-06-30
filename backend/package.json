@@ -23,8 +23,8 @@
   "main": "./src/index.ts",
   "scripts": {
     "dev": "nodemon",
-    "start": "nodemon src/index.ts",
-    "build": "rimraf dist && tsc",
+    "build": "npm install && npx tsc",
+    "start": "node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
