@@ -10,14 +10,12 @@ export const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<Layout showMain children={<HomePage />} />} />
       <Route path="/auth-callback" element={<AuthCallbackPage />} />
-      <Route
-        path="/user-profile"
-        element={
-          <ProtectedRoute>
-            <Layout children={<UserProfilePage />} />
-          </ProtectedRoute>
-        }
-      />
+      <Route element={<ProtectedRoute />}>
+        <Route
+          path="/user-profile"
+          element={<Layout children={<UserProfilePage />} />}
+        />
+      </Route>
 
       <Route
         path="*"
