@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Navigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 type Props = {
   children: React.ReactNode;
@@ -7,7 +7,7 @@ type Props = {
 export const ProtectedRoute = ({ children }: Props) => {
   const { isAuthenticated } = useAuth0();
 
-  if (!isAuthenticated) return <Navigate to="/" />;
+  if (isAuthenticated) return children;
 
-  return <>{children}</>;
+  return <Navigate to="/login" />;
 };
