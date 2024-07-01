@@ -1,13 +1,20 @@
 import MainSection from "../components/mainSection";
 import Footer from "../components/footer";
 import Header from "../components/header";
+import { useAuth0 } from "@auth0/auth0-react";
 
 type Props = {
   children: React.ReactNode;
   showMain?: boolean;
 };
 
-const layout = ({ children, showMain = false }: Props) => {
+const Layout = ({ children, showMain = false }: Props) => {
+  const { isLoading } = useAuth0();
+
+  if (isLoading) {
+    return <div></div>;
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       {!showMain && <Header />}
@@ -18,4 +25,4 @@ const layout = ({ children, showMain = false }: Props) => {
   );
 };
 
-export default layout;
+export default Layout;

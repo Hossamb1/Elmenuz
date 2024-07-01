@@ -20,9 +20,9 @@
   },
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "nodemon src/index.ts",
     "start": "nodemon src/index.ts",
     "build": "rimraf dist && tsc",
     "ts.check": "tsc --project tsconfig.json",
