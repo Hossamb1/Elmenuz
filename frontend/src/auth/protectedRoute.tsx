@@ -1,10 +1,13 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
-export const ProtectedRoute = () => {
+type Props = {
+  children: React.ReactNode;
+};
+export const ProtectedRoute = ({ children }: Props) => {
   const { isAuthenticated } = useAuth0();
 
   if (!isAuthenticated) return <Navigate to="/" />;
 
-  return <Outlet />;
+  return <>{children}</>;
 };
