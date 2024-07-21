@@ -16,20 +16,21 @@ const ImageSection = () => {
   const [fileUrl, setFileUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    setFileUrl(existingImageUrl);
-
-    axios
-      .get(existingImageUrl, { responseType: "blob" })
-      .then((response) => {
-        const file = new File([response.data], "existingImage.jpg", {
-          type: response.data.type,
+    if (existingImageUrl) {
+      setFileUrl(existingImageUrl);
+      axios
+        .get(existingImageUrl, { responseType: "blob" })
+        .then((response) => {
+          const file = new File([response.data], "existingImage.jpg", {
+            type: response.data.type,
+          });
+          setValue("imageFile", file);
+        })
+        .catch((error) => {
+          console.error("Error fetching the image:", error);
         });
-        setValue("imageFile", file);
-      })
-      .catch((error) => {
-        console.error("Error fetching the image:", error);
-      });
-  }, [existingImageUrl]);
+    }
+  }, [existingImageUrl, setValue]);
 
   // fix image update error
 
@@ -62,14 +63,13 @@ const ImageSection = () => {
         <FormField
           control={control}
           name="imageFile"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
               <FormControl>
                 <Input
                   type="file"
                   accept=".jpg,.jpeg,.png"
                   className="bg-white"
-                  placeholder={field.value}
                   onChange={handleFileChange}
                 />
               </FormControl>
