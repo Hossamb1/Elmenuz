@@ -2,7 +2,7 @@ import express from "express";
 import multer from "multer";
 import { restaurantController } from "../controllers/restaurantController";
 import { jwtCheck, jwtparse } from "../middleware/auth";
-import { validatedMyRestaurantRequest } from "../middleware/validation";
+import { validateMyRestaurantRequest } from "../middleware/validation";
 
 const router = express.Router();
 
@@ -19,7 +19,7 @@ router.get("/", jwtCheck, jwtparse, restaurantController.getMyRestaurant);
 router.post(
   "/",
   upload.single("imageFile"),
-  validatedMyRestaurantRequest,
+  validateMyRestaurantRequest,
   jwtCheck,
   jwtparse,
   restaurantController.createMyRestaurant
@@ -27,7 +27,7 @@ router.post(
 router.put(
   "/",
   upload.single("imageFile"),
-  validatedMyRestaurantRequest,
+  validateMyRestaurantRequest,
   jwtCheck,
   jwtparse,
   restaurantController.updateMyRestaurant
