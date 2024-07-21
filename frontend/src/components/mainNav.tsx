@@ -8,7 +8,14 @@ const MainNav = () => {
   return (
     <span className="flex space-x-2 items-center">
       {isAuthenticated ? (
-        <UsernameMenu />
+        <>
+          {/* <Link to="/order-status">
+            <span className="mr-5 font-bold hover:text-orange-500 ">
+              Order Status
+            </span>
+          </Link> */}
+          <UsernameMenu />
+        </>
       ) : (
         <div className="text-white">
           <Button

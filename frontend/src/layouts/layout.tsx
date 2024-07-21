@@ -12,7 +12,7 @@ const Layout = ({ children, showMain = false }: Props) => {
   const { isLoading } = useAuth0();
 
   if (isLoading) {
-    return <div></div>;
+    return <div>add loading page here</div>;
   }
 
   return (

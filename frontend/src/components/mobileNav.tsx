@@ -16,12 +16,12 @@ const MobileNav = () => {
   return (
     <Sheet>
       <SheetTrigger>
-        <Menu className="text-orange-500" />
+        <Menu className="text-orange-500 mt-2 hover:text-black  " />
       </SheetTrigger>
-      <SheetContent className="space-y-3 max-sm:w-screen  ">
+      <SheetContent className="space-y-3 max-sm:w-[97vw]">
         <SheetTitle>
           {isAuthenticated ? (
-            <span className="flex items-center pl-3 mt-[-2px] pb-3 font-bold  gap-2 ">
+            <span className="flex items-center pl-3 mt-[-2px] pb-3 font-bold gap-2">
               <CircleUserRound className="text-orange-500" />
               <span className="flex items-center">{user?.email}</span>
             </span>
@@ -38,7 +38,7 @@ const MobileNav = () => {
                 to="/order-status"
                 className="flex bg-white items-center font-bold hover:text-orange-500 mt-4"
               >
-                Order Status
+                <SheetTrigger>Order Status</SheetTrigger>
               </Link>
 
               <Separator />
@@ -46,19 +46,22 @@ const MobileNav = () => {
                 to="/manage-restaurant"
                 className="flex bg-white items-center font-bold hover:text-orange-500"
               >
-                My Restaurant
+                <SheetTrigger>My Restaurant</SheetTrigger>
               </Link>
               <hr />
               <Link
                 to="/user-profile"
                 className="flex bg-white items-center font-bold hover:text-orange-500"
               >
-                User Profile
+                <SheetTrigger>User Profile</SheetTrigger>
               </Link>
 
               <Button
-                onClick={() => logout()}
-                className="flex items-center px-3 font-bold hover:bg-gray-500"
+                onClick={() => {
+                  logout();
+                  localStorage.clear();
+                }}
+                className="flex items-center px-3 font-bold bg-orange-500 hover:bg-gray-500"
               >
                 Log Out
               </Button>
