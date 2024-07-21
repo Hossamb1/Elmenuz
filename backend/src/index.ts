@@ -32,6 +32,7 @@ app.get("/health", async (req: Request, res: Response) => {
   res.json({ message: "Health OK!" });
 });
 
+app.use("/api/my/user", myUserRoutes);
 app.use("/api/my/restaurant", myRestaurantRoutes);
 
 app.listen(5000, () => {
