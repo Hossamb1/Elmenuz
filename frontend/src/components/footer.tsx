@@ -1,5 +1,4 @@
 import logo from "../assets/elmenusLogoFlipped.svg";
-import appDown from "../assets/appDown.png";
 import { FaFacebook, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -13,7 +12,10 @@ const Footer = () => {
               <img src={logo} alt="elmenus logo" className="h-8" />
               Elmenuz
             </div>
-            <img src={appDown} alt="" className="min-w-[180px] w-48" />
+            <img
+              src="https://res.cloudinary.com/dmpydourb/image/upload/v1722220180/lzjqtlivrfqdmkcmmevt.png"
+              className="min-w-[180px] w-48"
+            />
           </div>
           <div>
             <span className="font-bold border-b-2 border-orange-500 pb-1">

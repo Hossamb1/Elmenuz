@@ -1,5 +1,3 @@
-import landingPage from "../assets/landing.png";
-import appDownloadImage from "../assets/appDownload.png";
 import { Link } from "react-router-dom";
 import elmenus from "../assets/elmenusLogoFlipped.svg";
 import MobileNav from "../components/mobileNav";
@@ -31,7 +29,10 @@ const HomePage = () => {
           </h1>
         </div>
         <div className="grid md:grid-cols-2 gap-5">
-          <img src={landingPage} alt="ordering food" />
+          <img
+            src="https://res.cloudinary.com/dmpydourb/image/upload/v1722220187/hgjs6du2nsdvzg9noovr.png"
+            alt="ordering food"
+          />
           <div className="flex flex-col items-center justify-center gap-4 text-center ">
             <span className="font-bold text-3xl tracking-tighter">
               We deliver anywhere!
@@ -41,9 +42,9 @@ const HomePage = () => {
               recommendations
             </span>
             <img
-              src={appDownloadImage}
+              src="https://res.cloudinary.com/dmpydourb/image/upload/v1722220180/igg5lmwlbsxudsyijdqk.png"
               alt="google play or apple Image"
-              className="w-35 h-35"
+              className="h-30"
             />
           </div>
         </div>
