@@ -17,6 +17,93 @@ const restaurant_1 = __importDefault(require("../models/restaurant"));
 const cloudinary_1 = __importDefault(require("cloudinary"));
 const mongoose_1 = __importDefault(require("mongoose"));
 // Check if the servers on vercel see the console.log() as a feedback
+const searchRestaurant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const city = req.params.city;
+        const searchQuery = req.query.searchQuery || "";
+        const selectedCuisines = req.query.selectedCuisines || "";
+        const sortOption = req.query.sortOption || "lastUpdated";
+        const page = parseInt(req.query.page) || 1;
+        const pageSize = 10;
+        const skip = (page - 1) * pageSize;
+        let query = {};
+        query["city"] = new RegExp(city, "i");
+        if (selectedCuisines) {
+            const cuisinesArray = selectedCuisines
+                .split(",")
+                .map((cuisines) => new RegExp(cuisines, "i"));
+            query["cuisines"] = { $all: cuisinesArray };
+        }
+        if (searchQuery) {
+            const searchRegex = new RegExp(searchQuery, "i");
+            query["$or"] = [
+                { restauantName: searchRegex },
+                { cuisines: { $in: [searchRegex] } },
+            ];
+        }
+        console.log(query);
+        if (city === "all") {
+            let restaurants;
+            let total;
+            if (searchQuery || selectedCuisines) {
+                delete query.city;
+                restaurants = yield restaurant_1.default.find(query)
+                    .sort({ [sortOption]: 1 })
+                    .skip(skip)
+                    .limit(pageSize)
+                    .lean();
+                total = yield restaurant_1.default.countDocuments(query);
+            }
+            else {
+                restaurants = yield restaurant_1.default.find()
+                    .sort({ [sortOption]: 1 })
+                    .skip(skip)
+                    .limit(pageSize)
+                    .lean();
+                total = yield restaurant_1.default.countDocuments();
+            }
+            const response = {
+                data: restaurants,
+                pagination: {
+                    total,
+                    page,
+                    pages: Math.ceil(total / pageSize),
+                },
+            };
+            return res.json(response);
+        }
+        const cityCheck = yield restaurant_1.default.countDocuments(query);
+        if (cityCheck === 0) {
+            return res.status(404).json({
+                data: [],
+                pagination: {
+                    total: 0,
+                    page: 1,
+                    pages: 10,
+                },
+            });
+        }
+        const restaurants = yield restaurant_1.default.find(query)
+            .sort({ [sortOption]: 1 })
+            .skip(skip)
+            .limit(pageSize)
+            .lean();
+        const total = yield restaurant_1.default.countDocuments(query);
+        const response = {
+            data: restaurants,
+            pagination: {
+                total,
+                page,
+                pages: Math.ceil(total / pageSize),
+            },
+        };
+        res.json(response);
+    }
+    catch (error) {
+        console.log("Error: ", error);
+        return res.status(500).json({ message: "Something went wrong." });
+    }
+});
 const updateMyRestaurant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const restaurant = yield restaurant_1.default.findOne({ user: req.userId });
@@ -30,7 +117,7 @@ const updateMyRestaurant = (req, res) => __awaiter(void 0, void 0, void 0, funct
         restaurant.estimatedDeliveryTime = req.body.estimatedDeliveryTime;
         restaurant.cuisines = req.body.cuisines;
         restaurant.menuItems = req.body.menuItems;
-        restaurant.lastUpdate = new Date();
+        restaurant.lastUpdated = new Date();
         if (req.file) {
             const imageUrl = yield uploadImage(req.file);
             restaurant.imageUrl = imageUrl;
@@ -87,4 +174,5 @@ exports.restaurantController = {
     updateMyRestaurant,
     createMyRestaurant,
     getMyRestaurant,
+    searchRestaurant,
 };

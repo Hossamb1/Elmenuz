@@ -19,6 +19,7 @@ const db_1 = __importDefault(require("./lib/db"));
 const myUserRoutes_1 = __importDefault(require("./routes/myUserRoutes"));
 const cloudinary_1 = require("cloudinary");
 const myRestaurantRoute_1 = __importDefault(require("./routes/myRestaurantRoute"));
+const restaurantRoute_1 = __importDefault(require("./routes/restaurantRoute"));
 const app = (0, express_1.default)();
 // connect to db
 (0, db_1.default)();
@@ -41,6 +42,7 @@ app.get("/health", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 }));
 app.use("/api/my/user", myUserRoutes_1.default);
 app.use("/api/my/restaurant", myRestaurantRoute_1.default);
+app.use("/api/restaurant", restaurantRoute_1.default);
 app.listen(5000, () => {
     console.log("server started on: 5000");
 });

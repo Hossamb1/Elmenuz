@@ -42,7 +42,7 @@ const restaurantSchema = new mongoose_1.default.Schema({
         type: String,
         required: true,
     },
-    lastUpdate: { type: Date },
+    lastUpdated: { type: Date },
 });
 const Restaurant = mongoose_1.default.model("Restaurant", restaurantSchema);
 exports.default = Restaurant;
