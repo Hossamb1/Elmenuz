@@ -5,6 +5,7 @@ import connectDb from "./lib/db";
 import myUserRoutes from "./routes/myUserRoutes";
 import { v2 as cloudinary } from "cloudinary";
 import myRestaurantRoutes from "./routes/myRestaurantRoute";
+import restaurantRoutes from "./routes/restaurantRoute";
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.get("/health", async (req: Request, res: Response) => {
 
 app.use("/api/my/user", myUserRoutes);
 app.use("/api/my/restaurant", myRestaurantRoutes);
+app.use("/api/restaurant", restaurantRoutes);
 
 app.listen(5000, () => {
   console.log("server started on: 5000");

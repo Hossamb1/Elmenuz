@@ -1,9 +1,112 @@
 import Restaurant from "../models/restaurant";
 import cloudinary from "cloudinary";
-import { Request, Response } from "express";
+import { Request, response, Response } from "express";
 import mongoose from "mongoose";
 
 // Check if the servers on vercel see the console.log() as a feedback
+
+const searchRestaurant = async (req: Request, res: Response) => {
+  try {
+    const city = req.params.city;
+
+    const searchQuery = (req.query.searchQuery as string) || "";
+    const selectedCuisines = (req.query.selectedCuisines as string) || "";
+    const sortOption = (req.query.sortOption as string) || "lastUpdated";
+    const page = parseInt(req.query.page as string) || 1;
+
+    const pageSize = 10;
+    const skip = (page - 1) * pageSize;
+
+    let query: any = {};
+
+    query["city"] = new RegExp(city, "i");
+
+    if (selectedCuisines) {
+      const cuisinesArray = selectedCuisines
+        .split(",")
+        .map((cuisines) => new RegExp(cuisines, "i"));
+
+      query["cuisines"] = { $all: cuisinesArray };
+    }
+
+    if (searchQuery) {
+      const searchRegex = new RegExp(searchQuery, "i");
+
+      query["$or"] = [
+        { restauantName: searchRegex },
+        { cuisines: { $in: [searchRegex] } },
+      ];
+    }
+    console.log(query);
+
+    if (city === "all") {
+      let restaurants;
+      let total;
+      if (searchQuery || selectedCuisines) {
+        delete query.city;
+        restaurants = await Restaurant.find(query)
+          .sort({ [sortOption]: 1 })
+          .skip(skip)
+          .limit(pageSize)
+          .lean();
+        total = await Restaurant.countDocuments(query);
+      } else {
+        restaurants = await Restaurant.find()
+          .sort({ [sortOption]: 1 })
+          .skip(skip)
+          .limit(pageSize)
+          .lean();
+        total = await Restaurant.countDocuments();
+      }
+
+      const response = {
+        data: restaurants,
+        pagination: {
+          total,
+          page,
+          pages: Math.ceil(total / pageSize),
+        },
+      };
+
+      return res.json(response);
+    }
+
+    const cityCheck = await Restaurant.countDocuments(query);
+
+    if (cityCheck === 0) {
+      return res.status(404).json({
+        data: [],
+        pagination: {
+          total: 0,
+          page: 1,
+          pages: 10,
+        },
+      });
+    }
+
+    const restaurants = await Restaurant.find(query)
+      .sort({ [sortOption]: 1 })
+      .skip(skip)
+      .limit(pageSize)
+      .lean();
+
+    const total = await Restaurant.countDocuments(query);
+
+    const response = {
+      data: restaurants,
+      pagination: {
+        total,
+        page,
+        pages: Math.ceil(total / pageSize),
+      },
+    };
+
+    res.json(response);
+  } catch (error) {
+    console.log("Error: ", error);
+    return res.status(500).json({ message: "Something went wrong." });
+  }
+};
 
 const updateMyRestaurant = async (req: Request, res: Response) => {
   try {
@@ -19,7 +122,7 @@ const updateMyRestaurant = async (req: Request, res: Response) => {
     restaurant.estimatedDeliveryTime = req.body.estimatedDeliveryTime;
     restaurant.cuisines = req.body.cuisines;
     restaurant.menuItems = req.body.menuItems;
-    restaurant.lastUpdate = new Date();
+    restaurant.lastUpdated = new Date();
 
     if (req.file) {
       const imageUrl = await uploadImage(req.file as Express.Multer.File);
@@ -86,4 +189,5 @@ export const restaurantController = {
   updateMyRestaurant,
   createMyRestaurant,
   getMyRestaurant,
+  searchRestaurant,
 };

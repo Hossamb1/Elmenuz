@@ -17,9 +17,11 @@ const ImageSection = () => {
 
   useEffect(() => {
     if (existingImageUrl) {
-      setFileUrl(existingImageUrl);
+      const secureImageUrl = existingImageUrl.replace("http://", "https://");
+
+      setFileUrl(secureImageUrl);
       axios
-        .get(existingImageUrl, { responseType: "blob" })
+        .get(secureImageUrl, { responseType: "blob" })
         .then((response) => {
           const file = new File([response.data], "existingImage.jpg", {
             type: response.data.type,
@@ -31,16 +33,6 @@ const ImageSection = () => {
         });
     }
   }, [existingImageUrl, setValue]);
-
-  // fix image update error
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files ? event.target.files[0] : null;
-    if (file) {
-      const newFileUrl = URL.createObjectURL(file);
-      setFileUrl(newFileUrl);
-    }
-  };
 
   return (
     <div className="space-y-2">
@@ -63,14 +55,23 @@ const ImageSection = () => {
         <FormField
           control={control}
           name="imageFile"
-          render={() => (
+          render={({ field }) => (
             <FormItem>
               <FormControl>
                 <Input
                   type="file"
                   accept=".jpg,.jpeg,.png"
                   className="bg-white"
-                  onChange={handleFileChange}
+                  onChange={(event) => {
+                    const file = event.target.files
+                      ? event.target.files[0]
+                      : null;
+                    if (file) {
+                      const newFileUrl = URL.createObjectURL(file);
+                      setFileUrl(newFileUrl);
+                    }
+                    field.onChange(file);
+                  }}
                 />
               </FormControl>
               <FormMessage />

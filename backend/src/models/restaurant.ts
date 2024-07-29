@@ -39,7 +39,7 @@ const restaurantSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  lastUpdate: { type: Date },
+  lastUpdated: { type: Date },
 });
 
 const Restaurant = mongoose.model("Restaurant", restaurantSchema);

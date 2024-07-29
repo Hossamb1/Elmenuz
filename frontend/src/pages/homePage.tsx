@@ -8,7 +8,7 @@ import MainNav from "../components/mainNav";
 const HomePage = () => {
   return (
     <>
-      <div className="p-7 absolute top-0 left-0 z-30 w-full text-white">
+      <div className="p-6 absolute top-0 left-0 z-30 w-full text-white">
         <div className="container p-0 max-auto flex justify-between items-center">
           <Link to="/" className="text-3xl font-bold tracking-tight ">
             <div className="flex items-center gap-3">
