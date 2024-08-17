@@ -17,6 +17,20 @@ const restaurant_1 = __importDefault(require("../models/restaurant"));
 const cloudinary_1 = __importDefault(require("cloudinary"));
 const mongoose_1 = __importDefault(require("mongoose"));
 // Check if the servers on vercel see the console.log() as a feedback
+const getRestaurant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const restaurantId = req.params.restaurantId;
+        const restaurant = yield restaurant_1.default.findById(restaurantId);
+        if (!restaurant) {
+            return res.status(404).json({ message: "Restaurant not found" });
+        }
+        res.json(restaurant);
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Something went wrong" });
+    }
+});
 const searchRestaurant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const city = req.params.city;
@@ -37,11 +51,10 @@ const searchRestaurant = (req, res) => __awaiter(void 0, void 0, void 0, functio
         if (searchQuery) {
             const searchRegex = new RegExp(searchQuery, "i");
             query["$or"] = [
-                { restauantName: searchRegex },
+                { restaurantName: searchRegex },
                 { cuisines: { $in: [searchRegex] } },
             ];
         }
-        console.log(query);
         if (city === "all") {
             let restaurants;
             let total;
@@ -62,6 +75,16 @@ const searchRestaurant = (req, res) => __awaiter(void 0, void 0, void 0, functio
                     .lean();
                 total = yield restaurant_1.default.countDocuments();
             }
+            if (total === 0) {
+                return res.status(204).json({
+                    data: [],
+                    pagination: {
+                        total: 0,
+                        page: 1,
+                        pages: 10,
+                    },
+                });
+            }
             const response = {
                 data: restaurants,
                 pagination: {
@@ -74,7 +97,7 @@ const searchRestaurant = (req, res) => __awaiter(void 0, void 0, void 0, functio
         }
         const cityCheck = yield restaurant_1.default.countDocuments(query);
         if (cityCheck === 0) {
-            return res.status(404).json({
+            return res.status(204).json({
                 data: [],
                 pagination: {
                     total: 0,
@@ -154,7 +177,7 @@ const getMyRestaurant = (req, res) => __awaiter(void 0, void 0, void 0, function
     try {
         const restaurant = yield restaurant_1.default.findOne({ user: req.userId });
         if (!restaurant) {
-            res.status(404).json({ message: "restaurant not found" });
+            return res.status(404).json({ message: "restaurant not found" });
         }
         res.json(restaurant);
     }
@@ -175,4 +198,5 @@ exports.restaurantController = {
     createMyRestaurant,
     getMyRestaurant,
     searchRestaurant,
+    getRestaurant,
 };
