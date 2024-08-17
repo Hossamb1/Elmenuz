@@ -19,7 +19,7 @@ const Layout = ({ children, showMain = false }: Props) => {
     <div className="flex flex-col min-h-screen">
       {!showMain && <Header />}
       {showMain && <MainSection />}
-      <div className="container flex-1 py-20 mx-auto">{children}</div>
+      <div className="container py-10 m-auto">{children}</div>
       <Footer />
     </div>
   );

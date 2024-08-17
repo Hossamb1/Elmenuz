@@ -48,7 +48,7 @@ const SearchBar = ({ onSubmit, onReset, placeHolder, searchQuery }: Props) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={`flex items-center max-md:flex-1 basis-3/4 max-h-[56px] gap-3 justify-between flex-row bg-white border-2 rounded-full p-2 m-4 ${
+        className={`flex items-center max-sm:flex-1 basis-3/4 max-h-[56px] gap-3 justify-between flex-row bg-white border-2 rounded-full p-2 m-4 ${
           form.formState.errors.searchQuery && "border-red-500"
         }`}
       >
@@ -79,7 +79,7 @@ const SearchBar = ({ onSubmit, onReset, placeHolder, searchQuery }: Props) => {
             onClick={handleReset}
             type="button"
             variant="outline"
-            className="rounded-full"
+            className="rounded-full max-md:hidden"
           >
             Reset
           </Button>

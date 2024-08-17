@@ -6,7 +6,7 @@ export const ProtectedRoute = () => {
   const { isAuthenticated, isLoading } = useAuth0();
 
   if (isLoading) {
-    return null;
+    return <>LOADING......</>;
   }
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/" replace />;

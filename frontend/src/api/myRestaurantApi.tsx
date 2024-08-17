@@ -125,5 +125,6 @@ export const useCreateMyRestaurant = () => {
   return {
     createRestaurant,
     isLoading,
+    isSuccess,
   };
 };

@@ -4,6 +4,7 @@ import SearchResultInfo from "../components/SearchResultInfo";
 import SearchResultCard from "../components/SearchResultCard";
 import { useState } from "react";
 import SearchBar, { searchForm } from "../components/searchBar";
+
 import PaginationSelector from "../components/PaginationSelector";
 import CuisineFilter from "../components/cuisineFilter";
 import SortOptionDropdown from "../components/SortOptionDropdown";
@@ -69,7 +70,7 @@ const SearchPage = () => {
     return <div>Loading...</div>;
   }
 
-  if (!results?.data || !city || isError) {
+  if (!city || isError) {
     return <div>no results found</div>;
   }
 
@@ -92,22 +93,28 @@ const SearchPage = () => {
           onSubmit={setSearchQuery}
           onReset={resetSearch}
         />
-        {/* put a dropmenu for the city here */}
-        <div className="flex justify-between flex-col gap-3 lg:flex-row">
-          <SearchResultInfo total={results.pagination.total} city={city} />
-          <SortOptionDropdown
-            onChange={setSortOption}
-            sortOption={searchState.sortOption}
-          />
-        </div>
-        {results.data.map((restaurant) => (
-          <SearchResultCard restaurant={restaurant} />
-        ))}
-        <PaginationSelector
-          page={results.pagination.page}
-          pages={results.pagination.pages}
-          onPageChange={setPage}
-        />
+
+        {results?.data ? (
+          <>
+            <div className="flex justify-between flex-col gap-3 lg:flex-row">
+              <SearchResultInfo total={results.pagination.total} city={city} />
+              <SortOptionDropdown
+                onChange={setSortOption}
+                sortOption={searchState.sortOption}
+              />
+            </div>
+            {results.data.map((restaurant) => (
+              <SearchResultCard restaurant={restaurant} key={restaurant._id} />
+            ))}
+            <PaginationSelector
+              page={results.pagination.page}
+              pages={results.pagination.pages}
+              onPageChange={setPage}
+            />
+          </>
+        ) : (
+          <h1 className="text-xl font-bold">No restaurants found</h1>
+        )}
       </div>
     </div>
   );

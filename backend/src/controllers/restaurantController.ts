@@ -1,9 +1,26 @@
 import Restaurant from "../models/restaurant";
 import cloudinary from "cloudinary";
-import { Request, response, Response } from "express";
+import { Request, Response } from "express";
 import mongoose from "mongoose";
 
 // Check if the servers on vercel see the console.log() as a feedback
+
+const getRestaurant = async (req: Request, res: Response) => {
+  try {
+    const restaurantId = req.params.restaurantId;
+
+    const restaurant = await Restaurant.findById(restaurantId);
+
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurant not found" });
+    }
+
+    res.json(restaurant);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
 
 const searchRestaurant = async (req: Request, res: Response) => {
   try {
@@ -33,11 +50,10 @@ const searchRestaurant = async (req: Request, res: Response) => {
       const searchRegex = new RegExp(searchQuery, "i");
 
       query["$or"] = [
-        { restauantName: searchRegex },
+        { restaurantName: searchRegex },
         { cuisines: { $in: [searchRegex] } },
       ];
     }
-    console.log(query);
 
     if (city === "all") {
       let restaurants;
@@ -59,6 +75,17 @@ const searchRestaurant = async (req: Request, res: Response) => {
         total = await Restaurant.countDocuments();
       }
 
+      if (total === 0) {
+        return res.status(204).json({
+          data: [],
+          pagination: {
+            total: 0,
+            page: 1,
+            pages: 10,
+          },
+        });
+      }
+
       const response = {
         data: restaurants,
         pagination: {
@@ -74,7 +101,7 @@ const searchRestaurant = async (req: Request, res: Response) => {
     const cityCheck = await Restaurant.countDocuments(query);
 
     if (cityCheck === 0) {
-      return res.status(404).json({
+      return res.status(204).json({
         data: [],
         pagination: {
           total: 0,
@@ -165,7 +192,7 @@ const getMyRestaurant = async (req: Request, res: Response) => {
     const restaurant = await Restaurant.findOne({ user: req.userId });
 
     if (!restaurant) {
-      res.status(404).json({ message: "restaurant not found" });
+      return res.status(404).json({ message: "restaurant not found" });
     }
 
     res.json(restaurant);
@@ -190,4 +217,5 @@ export const restaurantController = {
   createMyRestaurant,
   getMyRestaurant,
   searchRestaurant,
+  getRestaurant,
 };

@@ -6,6 +6,7 @@ import myUserRoutes from "./routes/myUserRoutes";
 import { v2 as cloudinary } from "cloudinary";
 import myRestaurantRoutes from "./routes/myRestaurantRoute";
 import restaurantRoutes from "./routes/restaurantRoute";
+import orderRoutes from "./routes/orderRoute";
 
 const app = express();
 
@@ -19,9 +20,6 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// adding middleware
-app.use(express.json());
-
 // allowing all cors
 app.use(cors());
 
@@ -29,6 +27,12 @@ app.use(cors());
 app.get("/", async (req: Request, res: Response) => {
   res.json({ message: "Hello!" });
 });
+
+app.use("/api/order/checkout/webhook", express.raw({ type: "*/*" }));
+
+// adding middleware
+app.use(express.json());
+
 app.get("/health", async (req: Request, res: Response) => {
   res.json({ message: "Health OK!" });
 });
@@ -36,6 +40,7 @@ app.get("/health", async (req: Request, res: Response) => {
 app.use("/api/my/user", myUserRoutes);
 app.use("/api/my/restaurant", myRestaurantRoutes);
 app.use("/api/restaurant", restaurantRoutes);
+app.use("/api/order", orderRoutes);
 
 app.listen(5000, () => {
   console.log("server started on: 5000");

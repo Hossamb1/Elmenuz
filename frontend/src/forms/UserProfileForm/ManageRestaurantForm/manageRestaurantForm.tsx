@@ -110,6 +110,7 @@ function RestaurantForm({ onSave, isLoading, restaurant }: Props) {
     });
 
     formData.append("imageFile", formDataJson.imageFile);
+
     onSave(formData);
   };
   return (
@@ -126,7 +127,7 @@ function RestaurantForm({ onSave, isLoading, restaurant }: Props) {
         <Separator />
         <ImageSection />
         {isLoading ? (
-          <LoadingButton />
+          <LoadingButton classname={""} />
         ) : (
           <Button type="submit" onSubmit={form.handleSubmit(onSubmit)}>
             Submit
