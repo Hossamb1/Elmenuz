@@ -4,13 +4,19 @@ This project is built using the power of MERN (mongoDB, Express.js, React JS, No
 
 A full-stack web application inspired by the popular food discovery platform, Elmenus. This project allows users to explore and implement their own restaurant within the platform, providing a personalized dining experience.
 
-## Usage
+## Features
 
-Restaurant Management: Users can create and manage their own restaurant, with a limitation of one restaurant per user.
+- Restaurant Management
+- Interactive UI
+- Secure Authentication
+- Image Upload
+- Payments
 
-Interactive UI: The application features a responsive and user-friendly interface, ensuring a seamless experience across all devices.
+## Tech Stack
 
-Authentication: Secure login and registration are handled through Auth0, ensuring user data is protected.
+**Client:** React & TypeScript, Vite, Tailwind CSS, Radix UI, React Query, React Hook Form & Zod
+
+**Server:** Node.js & Express, MongoDB & Mongoose, JWT & OAuth2, Multer & Cloudinary
 
 ### Set Environment Variables
 
