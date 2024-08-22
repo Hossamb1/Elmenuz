@@ -21,7 +21,7 @@ const RestaurantInfo = ({ restaurant }: Props) => {
         </CardTitle>
         <CardDescription></CardDescription>
       </CardHeader>
-      <CardContent className="flex">
+      <CardContent className="flex flex-wrap">
         {restaurant.cuisines.map((item, index) => (
           <span className="flex" key={index}>
             <span>{item}</span>

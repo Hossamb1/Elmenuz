@@ -22,7 +22,7 @@ const MainSection = () => {
         <h1 className="text-center md:text-3xl text-2xl font-bold mt-16 px-7 basis-full tracking-tight text-white">
           or explore our restaurants
         </h1>
-        <Link to="/search/all" className="flex-1 ">
+        <Link to="/search/all" className="flex-1">
           <div className="bg-white text-black-500 p-8 items-center rounded-md m-4 flex gap-2">
             <div className="flex-1">
               <h3 className="text-xl font-semibold my-2 flex items-center gap-2">

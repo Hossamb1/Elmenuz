@@ -13,10 +13,51 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.restaurantController = void 0;
+const order_1 = __importDefault(require("../models/order"));
 const restaurant_1 = __importDefault(require("../models/restaurant"));
 const cloudinary_1 = __importDefault(require("cloudinary"));
 const mongoose_1 = __importDefault(require("mongoose"));
-// Check if the servers on vercel see the console.log() as a feedback
+const updateOrderStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    try {
+        const { orderId } = req.params;
+        const { status } = req.body;
+        const order = yield order_1.default.findById(orderId);
+        if (!order) {
+            return res.status(404).json({ message: "order not found" });
+        }
+        const restaurant = yield restaurant_1.default.findById(order.restaurant);
+        if (((_a = restaurant === null || restaurant === void 0 ? void 0 : restaurant.user) === null || _a === void 0 ? void 0 : _a._id.toString()) !== req.userId) {
+            return res.status(401).send();
+        }
+        order.status = status;
+        yield order.save();
+        res.status(200).json(order);
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Something went wrong" });
+    }
+});
+const getMyRestaurantOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const restaurant = yield restaurant_1.default.findOne({ user: req.userId });
+        if (!restaurant) {
+            return res.status(404).json({ message: "restaurant not found" });
+        }
+        const orders = yield order_1.default.find({ restaurant: restaurant._id })
+            .populate("restaurant")
+            .populate("user");
+        if (!orders) {
+            return res.status(404).json({ message: "restaurant not found" });
+        }
+        res.json(orders);
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Something went wrong" });
+    }
+});
 const getRestaurant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const restaurantId = req.params.restaurantId;
@@ -199,4 +240,6 @@ exports.restaurantController = {
     getMyRestaurant,
     searchRestaurant,
     getRestaurant,
+    getMyRestaurantOrders,
+    updateOrderStatus,
 };

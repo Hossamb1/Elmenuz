@@ -27,6 +27,30 @@ export type Restaurant = {
   lastUpdated: string;
 };
 
+export type OrderStatus =
+  | "placed"
+  | "paid"
+  | "inProgress"
+  | "outForDelivery"
+  | "delivered"
+  | "cancelled";
+export type Order = {
+  _id: string;
+  restaurant: Restaurant;
+  User: User;
+  deliveryDetails: {
+    name: string;
+    email: string;
+    addressLine1: string;
+    city: string;
+  };
+  cartItems: { menuItemId: string; name: string; quantity: string }[];
+  totalAmount: number;
+  status: OrderStatus;
+  createdAt: string;
+  restaurantId: string;
+};
+
 export type RestaurantSearchResponse = {
   data: Restaurant[];
   pagination: {

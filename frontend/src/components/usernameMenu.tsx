@@ -35,12 +35,7 @@ function UsernameMenu() {
               <span className="font-bold ">{user?.nickname}</span>
             </div>
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <Link to="/order-status">
-            <DropdownMenuItem>
-              <span className="py-2 text-lg">Order Status</span>
-            </DropdownMenuItem>
-          </Link>
+
           <DropdownMenuSeparator />
           <Link to="/manage-restaurant">
             <DropdownMenuItem>

@@ -4,6 +4,8 @@ import express from "express";
 
 const router = express.Router();
 
+router.get("/", jwtCheck, jwtparse, orderController.getMyOrders);
+
 router.post(
   "/checkout/create-checkout-session",
   jwtCheck,

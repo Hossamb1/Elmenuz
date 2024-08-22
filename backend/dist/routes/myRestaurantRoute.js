@@ -16,7 +16,9 @@ const upload = (0, multer_1.default)({
         fileSize: 5 * 1024 * 1024, // 5mb
     },
 });
+router.get("/order", auth_1.jwtCheck, auth_1.jwtparse, restaurantController_1.restaurantController.getMyRestaurantOrders);
 router.get("/", auth_1.jwtCheck, auth_1.jwtparse, restaurantController_1.restaurantController.getMyRestaurant);
+router.patch("/order/:orderId/status", auth_1.jwtCheck, auth_1.jwtparse, restaurantController_1.restaurantController.updateOrderStatus);
 router.post("/", upload.single("imageFile"), validation_1.validateMyRestaurantRequest, auth_1.jwtCheck, auth_1.jwtparse, restaurantController_1.restaurantController.createMyRestaurant);
 router.put("/", upload.single("imageFile"), validation_1.validateMyRestaurantRequest, auth_1.jwtCheck, auth_1.jwtparse, restaurantController_1.restaurantController.updateMyRestaurant);
 exports.default = router;

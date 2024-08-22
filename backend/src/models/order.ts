@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
-import Restaurant from "./restaurant";
 
 const orderSchema = new mongoose.Schema({
   restaurant: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "restaruant",
+    ref: "Restaurant",
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -26,7 +25,14 @@ const orderSchema = new mongoose.Schema({
   totalAmount: Number,
   status: {
     type: String,
-    enum: ["placed", "paid", "inProgress", "outForDelivery", "delivered"],
+    enum: [
+      "placed",
+      "paid",
+      "inProgress",
+      "outForDelivery",
+      "delivered",
+      "cancelled",
+    ],
   },
   createdAt: { type: Date, default: Date.now },
 });

@@ -18,13 +18,13 @@ const HomePage = () => {
             <MobileNav />
           </div>
           <div className="hidden md:block">
-            <MainNav />
+            <MainNav showOrderStatus={false} />
           </div>
         </div>
       </div>
       <div className="flex flex-col gap-12">
         <div className="text-center">
-          <h1 className="text-5xl text-orange-500 font-medium my-7">
+          <h1 className="text-5xl mx-4 text-orange-500 font-medium my-7">
             Food is just a click away!
           </h1>
         </div>
