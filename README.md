@@ -41,6 +41,10 @@ STRIPE_API_KEY
 STRIPE_WEBHOOK_SECRET
 ```
 
+
+
+## Available Scripts
+
 ### Install backend dependencies
 
 ```bash
@@ -54,8 +58,6 @@ npm install
 cd frontend
 npm install
 ```
-
-## Available Scripts
 
 In the project directory, you can run:
 
