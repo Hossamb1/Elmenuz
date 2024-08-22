@@ -1,12 +1,16 @@
 ﻿# Elmenuz app clone
 
-This project was made using the power of MERN (mongoDB, Express.js, React JS, Node.js) A
+This project is built using the power of MERN (mongoDB, Express.js, React JS, Node.js) with TypeScript, Tailwind CSS for styling, and Auth0 for secure user authentication.
 
-\*\*update description here\*\*.
+A full-stack web application inspired by the popular food discovery platform, Elmenus. This project allows users to explore and implement their own restaurant within the platform, providing a personalized dining experience.
 
 ## Usage
 
-\*\*Describe what the app can do and what It will be used for\*\*.
+Restaurant Management: Users can create and manage their own restaurant, with a limitation of one restaurant per user.
+
+Interactive UI: The application features a responsive and user-friendly interface, ensuring a seamless experience across all devices.
+
+Authentication: Secure login and registration are handled through Auth0, ensuring user data is protected.
 
 ### Set Environment Variables
 
@@ -45,6 +49,7 @@ npm run dev
 ```
 
 and for the frontend in the client folder.
+on[http://localhost:5173]
 
 That's all for this project, A small app achieving all MERN fundamentals.
 
