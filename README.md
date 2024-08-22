@@ -20,7 +20,29 @@ A full-stack web application inspired by the popular food discovery platform, El
 
 ### Set Environment Variables
 
-Rename the .envexample to .env and add your [MongoDB](https://www.mongodb.com/) database URI and your JWT secret
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file. \
+`MONGO_URI`
+```
+#Auth0
+AUTH0_AUDIENCE
+AUTH0_ISSUER_BASE_URL
+
+```
+```
+#Cloudinary
+CLOUDINARY_CLOUD_NAME
+CLOUDINARY_API_KEY
+CLOUDINARY_API_SECRET
+```
+```
+#Stripe
+FRONTEND_URL
+STRIPE_API_KEY
+STRIPE_WEBHOOK_SECRET
+```
 
 ### Install backend dependencies
 
