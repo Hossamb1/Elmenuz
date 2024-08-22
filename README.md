@@ -18,9 +18,6 @@ A full-stack web application inspired by the popular food discovery platform, El
 
 **Server:** Node.js & Express, MongoDB & Mongoose, JWT & OAuth2, Multer & Cloudinary
 
-### Set Environment Variables
-
-
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file. \
