@@ -1,4 +1,4 @@
-﻿# Elmenuz app clone
+﻿# Elmenus app clone
 
 This project is built using the power of MERN (mongoDB, Express.js, React JS, Node.js) with TypeScript, Tailwind CSS for styling, and Auth0 for secure user authentication.
 
