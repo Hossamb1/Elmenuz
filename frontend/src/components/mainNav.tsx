@@ -20,7 +20,7 @@ const MainNav = ({ showOrderStatus }: Props) => {
               </span>
             </Link>
           )}
-          <UsernameMenu />
+          <UsernameMenu showOrderStatus={showOrderStatus} />
         </>
       ) : (
         <div className="text-white">

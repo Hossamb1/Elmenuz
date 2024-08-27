@@ -13,7 +13,11 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-function UsernameMenu() {
+type Props = {
+  showOrderStatus: boolean;
+};
+
+function UsernameMenu({ showOrderStatus }: Props) {
   const { user, logout } = useAuth0();
 
   return (
@@ -37,6 +41,16 @@ function UsernameMenu() {
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />
+          {!showOrderStatus && (
+            <>
+              <Link to="/order-status">
+                <DropdownMenuItem>
+                  <span className="py-2 text-lg">Order Status</span>
+                </DropdownMenuItem>
+              </Link>
+              <DropdownMenuSeparator />
+            </>
+          )}
           <Link to="/manage-restaurant">
             <DropdownMenuItem>
               <span className="py-2 text-lg">My Restaurant</span>

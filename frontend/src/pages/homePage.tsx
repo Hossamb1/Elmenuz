@@ -8,12 +8,13 @@ const HomePage = () => {
     <>
       <div className="p-6 absolute top-0 left-0 z-30 w-full text-white">
         <div className="container p-0 max-auto flex justify-between items-center">
-          <Link to="/" className="text-3xl font-bold tracking-tight ">
-            <div className="flex items-center gap-3">
-              <img src={elmenus} alt="" className="h-8" />
+          <Link to="/" className="text-4xl font-bold tracking-tight">
+            <div className="flex items-center gap-4">
+              <img src={elmenus} alt="" className="h-10" />
               Elmenuz
             </div>
           </Link>
+
           <div className="md:hidden flex">
             <MobileNav />
           </div>

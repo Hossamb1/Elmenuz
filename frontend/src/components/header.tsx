@@ -8,9 +8,9 @@ const Header = () => {
     <>
       <div className="p-6 w-full border-b-2">
         <div className="container p-0 max-auto flex justify-between items-center ">
-          <Link to="/" className="text-3xl font-bold tracking-tight ">
-            <div className="flex items-center gap-3">
-              <img src={elmenus} alt="" className="h-8" />
+          <Link to="/" className="text-4xl font-bold tracking-tight">
+            <div className="flex items-center gap-4">
+              <img src={elmenus} alt="" className="h-10" />
               Elmenuz
             </div>
           </Link>

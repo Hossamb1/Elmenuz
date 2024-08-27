@@ -10,6 +10,7 @@ import { MenuItem } from "../types";
 import CheckoutButton from "../components/CheckoutButton";
 import { UserFormData } from "../forms/UserProfileForm/userProfileForm";
 import { useCreateCheckoutSession } from "../api/OrderApi";
+import Loader from "../components/loader";
 
 export type CartItem = {
   _id: string;
@@ -45,6 +46,28 @@ const DetailPage = () => {
         });
       } else {
         cart = [...prevCartItems, { ...menuItem, quantity: 1 }];
+      }
+
+      sessionStorage.setItem(`cartItems-${restaurantId}`, JSON.stringify(cart));
+      return [...cart];
+    });
+  };
+
+  const reduceFromCart = (menuItem: MenuItem) => {
+    setCartItems((prevCartItems) => {
+      const currentCartItem = prevCartItems.find((cartItem) => {
+        return cartItem.name === menuItem.name;
+      });
+
+      let cart;
+      if (currentCartItem) {
+        cart = prevCartItems.map((cartItem) => {
+          return cartItem.name === menuItem.name && cartItem.quantity >= 1
+            ? { ...cartItem, quantity: cartItem.quantity - 1 }
+            : cartItem;
+        });
+      } else {
+        cart = [...prevCartItems];
       }
 
       sessionStorage.setItem(`cartItems-${restaurantId}`, JSON.stringify(cart));
@@ -90,7 +113,7 @@ const DetailPage = () => {
   };
 
   if (isLoading || !restaurant) {
-    return "loading...";
+    return <Loader />;
   }
 
   return (
@@ -110,6 +133,7 @@ const DetailPage = () => {
               menuItem={menuItem}
               key={menuItem.price}
               addToCart={addToCart}
+              reduceFromCart={reduceFromCart}
             />
           ))}
         </div>

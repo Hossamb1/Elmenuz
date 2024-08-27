@@ -34,13 +34,11 @@ const OrderStatusHeader = ({ order }: Props) => {
 
   useEffect(() => {
     setProgress(getOrderStatusInfo().progressValue);
-
-    // Adjust the delay to control the speed of the progress
   }, [order.status]);
 
   return (
     <>
-      <h1 className="text-4xl font-bold tracking-tighter flex flex-col gap-5 md:flex-row md:justify-between">
+      <h1 className="text-4xl font-medium tracking-tighter flex flex-col gap-5 md:flex-row md:justify-between">
         <span> Order Status: {getOrderStatusInfo().label}</span>
         <span> Expected by: {getExpectedDelivery()}</span>
       </h1>

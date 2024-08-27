@@ -1,3 +1,4 @@
+import Loader from "../components/loader";
 import { useGetMyUser, useUpdateMyUser } from "../api/myUserApi";
 import UserProfileForm from "../forms/UserProfileForm/userProfileForm";
 
@@ -6,7 +7,7 @@ const UserProfilePage = () => {
   const { updateUser, isLoading: isUpdateLoading } = useUpdateMyUser();
 
   if (isGetLoading) {
-    return <span>Loading...</span>;
+    return <Loader />;
   }
 
   if (!currentUser) {
