@@ -31,7 +31,7 @@ function ManageRestaurantPage() {
     navigate("/");
     window.scrollTo(0, 0);
   }
-
+  console.log(orders ? "true" : "Fasle");
   const isEditing = !!getRestaurant;
   return (
     <Tabs defaultValue="orders">
@@ -47,7 +47,17 @@ function ManageRestaurantPage() {
           {isLoading ? (
             <>Loading orders...</>
           ) : (
-            <>{orders?.length} active orders</>
+            <>
+              {" "}
+              {orders ? (
+                <>{orders?.length} active orders</>
+              ) : (
+                <p className="text-xl">
+                  No restaurant found, Submit your restaurant and the orders
+                  will appear right here!
+                </p>
+              )}
+            </>
           )}
         </h2>
         {orders?.map((order) => (
