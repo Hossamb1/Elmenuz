@@ -15,7 +15,7 @@ const MainNav = ({ showOrderStatus }: Props) => {
         <>
           {showOrderStatus && (
             <Link to="/order-status">
-              <span className="mr-5 font-bold hover:text-orange-500 ">
+              <span className="mr-5 font-bold hover:text-orange-500">
                 Order Status
               </span>
             </Link>
@@ -25,7 +25,7 @@ const MainNav = ({ showOrderStatus }: Props) => {
       ) : (
         <div className="text-white">
           <Button
-            className="text-md h-10 px-5 text-md  hover:bg-orange-700 text-white bg-orange-500"
+            className="text-md h-10 px-5 text-md hover:bg-orange-700 text-white bg-orange-500"
             onClick={async () => await loginWithRedirect()}
           >
             Login or Sign up

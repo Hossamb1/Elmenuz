@@ -14,7 +14,9 @@ const Auth0ProviderWithNavigate = ({ children }: Props) => {
   const audience = import.meta.env.VITE_AUTH0_AUDIENCE;
 
   const onRedirectCallback = (appState?: AppState) => {
-    navigate(appState?.returnTo || "/auth-callback");
+    navigate("/auth-callback", {
+      state: { appState },
+    });
   };
 
   if (!domain || !clientId || !redirectUri || !audience) {

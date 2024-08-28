@@ -31,7 +31,7 @@ function ManageRestaurantPage() {
     navigate("/");
     window.scrollTo(0, 0);
   }
-  console.log(orders ? "true" : "Fasle");
+
   const isEditing = !!getRestaurant;
   return (
     <Tabs defaultValue="orders">
